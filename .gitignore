@@ -1,0 +1,43 @@
+# ========================
+# Python / Django
+# ========================
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Media & static output
+media/
+staticfiles/
+
+# Environment variables
+.env
+.env.*
+
+# ========================
+# Editors / OS
+# ========================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# ========================
+# Testing & build
+# ========================
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
