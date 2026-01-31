@@ -1,3 +1,29 @@
-from django.shortcuts import render
+from rest_framework import generics, permissions
+from .models import Room, Message
+from .serializers import RoomSerializer, MessageSerializer
 
-# Create your views here.
+class RoomListCreateView(generics.ListCreateAPIView):
+    serializer_class = RoomSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Room.objects.filter(participants=self.request.user)
+
+    def perform_create(self, serializer):
+        room = serializer.save()
+        room.participants.add(self.request.user)
+
+class MessageListCreateView(generics.ListCreateAPIView):
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        room_id = self.kwargs["room_id"]
+        return Message.objects.filter(room__uid=room_id)
+
+    def perform_create(self, serializer):
+        room_id = self.kwargs["room_id"]
+        serializer.save(
+            sender=self.request.user,
+            room_id=room_id
+        )
